@@ -1,5 +1,6 @@
 package com.gp.task.service;
 
+import com.gp.task.Mapper.DeviceMapper;
 import com.gp.task.entity.Device;
 import com.gp.task.exceptions.CustomException;
 import com.gp.task.modelDto.DeviceDto;
@@ -23,13 +24,10 @@ public class DeviceService {
 
     @Autowired
     private DeviceRepository deviceRepository;
-
-    private final List<DeviceDto> deviceDtos = new ArrayList<>();
-
     public List<DeviceDto> getDevices() {
-        ObjectMapper mapper = new ObjectMapper();
+        List<DeviceDto> deviceDtos = new ArrayList<>();
         deviceRepository.findAll().forEach(device -> {
-            deviceDtos.add(mapper.convertValue(device, DeviceDto.class));
+            deviceDtos.add(DeviceMapper.INSTANCE.deviceToDeviceDto(device));
         });
         return deviceDtos;
     }
@@ -40,11 +38,12 @@ public class DeviceService {
         }
 
         Device device = deviceRepository.findBySerialNo(serialNo);
+
         if (device == null) {
             throw new SerialNumberNotFoundExceptionER004();
         }
 
-        return new ObjectMapper().convertValue(device, DeviceDto.class);
+        return DeviceMapper.INSTANCE.deviceToDeviceDto(device);
     }
 
     public DeviceDto getDeviceByMachineCode(String machineCode) throws CustomException {
@@ -57,7 +56,7 @@ public class DeviceService {
             throw new MachineCodeNotFoundExceptionER002();
         }
 
-        return getObjectMapper().convertValue(device, DeviceDto.class);
+        return DeviceMapper.INSTANCE.deviceToDeviceDto(device);
     }
 
     public DeviceDto getDeviceBySerialNumberAndMachineCode(String serialNo, String machineCode) throws CustomException {
@@ -65,7 +64,7 @@ public class DeviceService {
             throw new InvalidSerialNumberExceptionER003();
         }
         if (isNullOrEmpty(machineCode)) {
-             throw new InvalidMachineCodeExceptionER001();
+            throw new InvalidMachineCodeExceptionER001();
         }
 
         Device device = deviceRepository.findBySerialNoAndMachineCode(serialNo, machineCode);
@@ -73,7 +72,7 @@ public class DeviceService {
             throw new SerialNumberNotFoundExceptionER004();
         }
 
-        return getObjectMapper().convertValue(device, DeviceDto.class);
+        return DeviceMapper.INSTANCE.deviceToDeviceDto(device);
     }
 
     public void addDevice(DeviceDto deviceDto) throws CustomException {
@@ -88,7 +87,7 @@ public class DeviceService {
             throw new InvalidMachineCodeExceptionER001();
         }
 
-        deviceRepository.save(getObjectMapper().convertValue(deviceDto, Device.class));
+        deviceRepository.save(DeviceMapper.INSTANCE.deviceDtoToDevice(deviceDto));
     }
 
     public void updateDevice(DeviceDto deviceDto) throws Exception {
@@ -127,12 +126,7 @@ public class DeviceService {
         }
         return isValid;
     }
-
     private boolean isNullOrEmpty(String value) {
         return StringUtils.isEmpty(value);
-    }
-
-    private ObjectMapper getObjectMapper() {
-        return new ObjectMapper();
     }
 }

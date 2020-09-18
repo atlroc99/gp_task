@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Data
 @Entity
@@ -17,6 +14,8 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Builder
 public class Device {
+    @Id
+    private String ID;
     private String serialNo;
     private String machineCode;
     private String deviceName;
