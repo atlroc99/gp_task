@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication()
-@EnableJpaRepositories(value = "com.gp.task.repository")
 public class TaskApplication {
 	public static void main(String[] args) {
 	    SpringApplication.run(TaskApplication.class, args);
