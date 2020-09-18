@@ -12,12 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @AllArgsConstructor
 @Builder
 public class DeviceDto {
-    @NotEmpty(message = "Serial number cannot be empty")
     private String serialNo;
-
-    @NotEmpty(message = "Macnine Code cannot be empty")
     private String machineCode;
-
-    @NotEmpty(message = "Device name cannot be empty")
     private String deviceName;
 }

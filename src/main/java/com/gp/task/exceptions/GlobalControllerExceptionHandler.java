@@ -33,4 +33,10 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
         CustomExceptionSchema response = new CustomExceptionSchema(ie.getResourceKey(), ie.getErrorCode(), ie.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+
+    public ResponseEntity<CustomExceptionSchema> handleCannotBeNotNullException(DeviceCannotBeNullExceptionER005 ie) {
+        CustomExceptionSchema customExceptionSchema = new CustomExceptionSchema(ie.getResourceKey(), ie.getErrorCode(), ie.getMessage());
+        return new ResponseEntity<>(customExceptionSchema, HttpStatus.BAD_REQUEST);
+    }
 }

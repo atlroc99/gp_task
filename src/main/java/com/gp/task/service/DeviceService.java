@@ -76,9 +76,9 @@ public class DeviceService {
         return getObjectMapper().convertValue(device, DeviceDto.class);
     }
 
-    public void addDevice(DeviceDto deviceDto) throws Exception {
-        if (deviceDto == null) {
-            throw new Exception("Object [Device] cannot be null");
+    public void addDevice(DeviceDto deviceDto) throws CustomException {
+        if (Objects.isNull(deviceDto)) {
+            throw new DeviceCannotBeNullExceptionER005();
         }
 
         if (isNullOrEmpty(deviceDto.getSerialNo()) || !isValid(deviceDto.getSerialNo())) {
@@ -129,7 +129,7 @@ public class DeviceService {
     }
 
     private boolean isNullOrEmpty(String value) {
-        return StringUtils.isEmpty(value.trim());
+        return StringUtils.isEmpty(value);
     }
 
     private ObjectMapper getObjectMapper() {

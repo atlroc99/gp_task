@@ -47,7 +47,7 @@ public class DeviceController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> addDevice(@Valid @RequestBody DeviceDto deviceDto) throws Exception {
+    public ResponseEntity<HttpStatus> addDevice(@RequestBody DeviceDto deviceDto) throws Exception {
         deviceService.addDevice(deviceDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
