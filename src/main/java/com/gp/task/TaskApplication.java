@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class})
+@SpringBootApplication()
+@EnableJpaRepositories(value = "com.gp.task.repository")
 public class TaskApplication {
 	public static void main(String[] args) {
 	    SpringApplication.run(TaskApplication.class, args);
