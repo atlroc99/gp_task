@@ -31,6 +31,7 @@ public class DeviceService {
         deviceRepository.findAll().forEach(device -> {
             deviceDtos.add(mapper.convertValue(device, DeviceDto.class));
         });
+
         return deviceDtos;
     }
 
@@ -40,6 +41,7 @@ public class DeviceService {
         }
 
         Device device = deviceRepository.findBySerialNo(serialNo);
+
         if (device == null) {
             throw new SerialNumberNotFoundExceptionER004();
         }
@@ -65,7 +67,7 @@ public class DeviceService {
             throw new InvalidSerialNumberExceptionER003();
         }
         if (isNullOrEmpty(machineCode)) {
-             throw new InvalidMachineCodeExceptionER001();
+            throw new InvalidMachineCodeExceptionER001();
         }
 
         Device device = deviceRepository.findBySerialNoAndMachineCode(serialNo, machineCode);
